@@ -1,0 +1,23 @@
+# Per-player runtime files the watcher writes next to itself
+savedvars_watcher_config.json
+.savedvars_watcher_state.json
+.savedvars_watcher_id
+.savedvars_watcher_startup
+savedvars_watcher_backup.csv
+savedvars_watcher_errors.log
+savedvars_watcher.log
+watcher_config.json
+.watcher_state.json
+watcher_backup.csv
+watcher_errors.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# PyInstaller output; the exe is distributed from the dashboard, never committed
+/build/
+/dist/
+*.spec
