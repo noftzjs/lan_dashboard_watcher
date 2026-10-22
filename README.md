@@ -10,11 +10,15 @@ This repository is published so players can read what runs on their PC. It is de
 
 ## What it reads and sends
 
-- **Reads:** one file, the addon's SavedVariables, found by scanning every drive for `World of Warcraft/_*_/WTF/Account/*/SavedVariables/LanDashboard.lua`. With several accounts it follows the most recently written one.
-- **Sends:** the addon's queued lines, verbatim, to the server address in its config, over HTTPS, with the shared ingestion token as a header. It also sends two random ids so the operator can group one person's characters: a watcher id generated on first run and a hash of the account folder name. Neither is your account name or email.
+- **Reads:** one file, the addon's SavedVariables, found by scanning every drive for `World of Warcraft/_*_/WTF/Account/*/SavedVariables/LanDashboard.lua`. With several accounts it follows the most recently written one. It keeps checking: if another install's or account's file starts changing more recently (the game moving from a beta folder to the live one, or you switching accounts), it follows that one and says so in the log. A path set in the config file is never switched away from automatically.
+- **Sends:** the addon's queued lines, verbatim, to the server address in its config, over HTTPS, with the shared ingestion token as a header. It also sends two random ids so the operator can group one person's characters: a watcher id generated on first run and a hash of the account folder name. Neither is your account name or email. It also sends its own version and the addon's, so the operator can tell who is on an old build.
 - **Keeps locally, next to the exe:** `savedvars_watcher_config.json` (server address and token), `.savedvars_watcher_state.json` (how far it has sent), `savedvars_watcher_backup.csv` (a copy of everything sent, so nothing is lost if the server is down), and `savedvars_watcher.log`.
 
 It never reads chat logs, the game's memory, or anything outside that one file. The older `log_watcher.py` is a fallback that tails `WoWChatLog.txt`; it is kept for reference and is not what the setup page distributes.
+
+## One copy at a time
+
+Only one watcher runs per PC. Starting a copy from a different folder, such as a newer download, ends the one already running and takes over, and keeps Start with Windows pointed at the copy you just ran. Starting the same exe twice does nothing but tell you it is already running.
 
 ## Tray menu
 
